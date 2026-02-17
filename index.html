@@ -37,7 +37,7 @@
             <defs>
               <mask id="waterMask">
                 <rect id="waterFill" x="0" y="200" width="100" height="0" fill="white" />
-                <!-- Wider wave for animation (200 width) wrapped in Group for Y-axis move -->
+                
                 <g id="waveGroup" style="transform: translateY(200px);">
                   <path id="waterWave" d="M0 0 Q 25 5, 50 0 T 100 0 T 150 0 T 200 0 V 20 H 0 Z" fill="white"
                     class="wave-shape" />
@@ -58,7 +58,6 @@
             <rect x="20" y="0" width="60" height="10" fill="#30363d" />
 
             <!-- Water -->
-            <!-- Start fill from bottom (y=200) going up. The mask handles the height. Clip-path handles the shape. -->
             <rect x="0" y="0" width="100" height="200" fill="url(#waterGradient)" mask="url(#waterMask)"
               clip-path="url(#bottleClip)" />
 
@@ -108,7 +107,6 @@
     <!-- Log Row -->
     <div class="log-section">
       <div id="logContainer" class="log-row">
-        <!-- Log icons will be injected here -->
       </div>
     </div>
 
@@ -121,5 +119,6 @@
   <canvas id="confettiCanvas"></canvas>
   <script src="script.js"></script>
 </body>
+
 
 </html>

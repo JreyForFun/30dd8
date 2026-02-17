@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Intake Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Water Intake Tracker</h1>
+    <p id="currentDate">Mon Nov 17 2025</p>
+  </header>
+
+  <div class="app-container">
+    <!-- Goal Input -->
+    <div class="goal-section">
+      <label for="goalInput">Daily Goal:</label>
+      <div class="goal-control">
+        <input type="number" id="goalInput" min="1" max="20" value="8">
+        <button id="setGoalBtn">Set Goal</button>
+      </div>
+    </div>
+
+    <!-- Main Split Content -->
+    <main class="main-split">
+      <!-- Left: Bottle Visualization -->
+      <div class="bottle-column">
+        <div class="bottle-container">
+          <svg class="bottle-svg" viewBox="0 0 100 200">
+            <defs>
+              <mask id="waterMask">
+                <rect id="waterFill" x="0" y="200" width="100" height="0" fill="white" />
+                <!-- Wider wave for animation (200 width) wrapped in Group for Y-axis move -->
+                <g id="waveGroup" style="transform: translateY(200px);">
+                  <path id="waterWave" d="M0 0 Q 25 5, 50 0 T 100 0 T 150 0 T 200 0 V 20 H 0 Z" fill="white"
+                    class="wave-shape" />
+                </g>
+              </mask>
+              <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#00d2ff" class="water-color-top" />
+                <stop offset="100%" stop-color="#3a7bd5" class="water-color-bottom" />
+              </linearGradient>
+              <clipPath id="bottleClip">
+                <path d="M20,10 L20,40 L10,50 L10,190 Q10,200 50,200 Q90,200 90,190 L90,60 L80,40 L80,10 Z" />
+              </clipPath>
+            </defs>
+            <!-- Bottle Outline -->
+            <path d="M20,10 L20,40 L10,50 L10,190 Q10,200 50,200 Q90,200 90,190 L90,60 L80,40 L80,10 Z" fill="none"
+              stroke="#30363d" stroke-width="4" />
+            <!-- Cap -->
+            <rect x="20" y="0" width="60" height="10" fill="#30363d" />
+
+            <!-- Water -->
+            <!-- Start fill from bottom (y=200) going up. The mask handles the height. Clip-path handles the shape. -->
+            <rect x="0" y="0" width="100" height="200" fill="url(#waterGradient)" mask="url(#waterMask)"
+              clip-path="url(#bottleClip)" />
+
+            <!-- Percentage Text -->
+            <text id="percentageText" x="50" y="120" text-anchor="middle" fill="#ffffff" font-size="20"
+              font-weight="bold" style="filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.5));">0%</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Right: Stats Panel -->
+      <div class="stats-column">
+        <div class="stat-card">
+          <span id="countDisplay" class="large-stat">0 / 8</span>
+          <span class="stat-label">Glasses</span>
+        </div>
+
+        <div class="progress-container">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div class="stat-row">
+          <span id="remainingDisplay" class="stat-text">🥛 8 remaining</span>
+        </div>
+
+        <div class="stat-row">
+          <span id="lastLoggedDisplay" class="stat-text small">Last logged: —</span>
+        </div>
+
+        <div class="stat-row">
+          <span id="streakDisplay" class="stat-text highlight">🔥 0 day streak</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Controls -->
+    <div class="controls-section">
+      <div class="glass-controls">
+        <button id="removeGlassBtn" class="control-btn minus" aria-label="Remove glass">−</button>
+        <div class="add-wrapper">
+          <button id="addGlassBtn" class="control-btn plus" aria-label="Add glass">+</button>
+          <div id="reminderBadge" class="reminder-badge hidden">Time to drink! 💧</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log Row -->
+    <div class="log-section">
+      <div id="logContainer" class="log-row">
+        <!-- Log icons will be injected here -->
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <footer class="actions-footer">
+      <button id="resetDayBtn" class="action-btn danger">Reset Today</button>
+    </footer>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+  <script src="script.js"></script>
+</body>
+
+</html>

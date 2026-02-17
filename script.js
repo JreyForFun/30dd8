@@ -1,9 +1,4 @@
-/**
- * Water Intake Tracker
- * Logic for state management, UI updates, and animations.
- */
 
-// --- Constants & Config ---
 const DEFAULT_GOAL = 8;
 const STORAGE_KEYS = {
   GOAL: 'wGoal',
@@ -13,7 +8,6 @@ const STORAGE_KEYS = {
 };
 const REMINDER_DELAY_MS = 2 * 60 * 60 * 1000; // 2 hours
 
-// --- State ---
 let state = {
   goal: DEFAULT_GOAL,
   logs: [],
@@ -21,7 +15,6 @@ let state = {
   lastActiveDate: ''
 };
 
-// --- DOM Elements ---
 const dom = {
   date: document.getElementById('currentDate'),
   goalInput: document.getElementById('goalInput'),
@@ -52,7 +45,6 @@ const dom = {
   confetti: document.getElementById('confettiCanvas')
 };
 
-// --- Initialization ---
 function init() {
   loadState();
   checkDate();
@@ -97,15 +89,8 @@ function checkDate() {
   dom.date.textContent = today;
 
   if (state.lastActiveDate !== today) {
-    // New Day Detected
+
     if (state.lastActiveDate) {
-      // Check if goal was met yesterday (naive check: requires log history or stored status)
-      // Ideally we'd store "yesterday's count" but the prompt asks to check "yesterday's goal was met"
-      // Since we only store 'logs' array which usually corresponds to "today", we need to see 
-      // if we are resetting *from* a valid previous state.
-      // However, the simplest prompt compliant way is: 
-      // If we are resetting, it means we are opening app on a new day. 
-      // The logs currently in state are from the *previous* active day.
 
       const count = state.logs.length;
       if (count >= state.goal) {
@@ -122,7 +107,6 @@ function checkDate() {
   }
 }
 
-// --- Logic ---
 function addGlass() {
   const now = new Date();
   const glass = {
@@ -136,7 +120,6 @@ function addGlass() {
   render();
   triggerButtonAnimation(dom.controls.add);
 
-  // Check for goal completion
   if (state.logs.length === state.goal) {
     triggerConfetti();
   }
@@ -146,7 +129,7 @@ function addGlass() {
 
 function removeGlass() {
   if (state.logs.length === 0) return;
-  state.logs.pop(); // Remove last
+  state.logs.pop(); 
   saveState();
   render();
   triggerButtonAnimation(dom.controls.remove);
@@ -176,23 +159,20 @@ function setGoal() {
   if (newGoal > 20) newGoal = 20;
 
   state.goal = newGoal;
-  dom.goalInput.value = newGoal; // normalize display
+  dom.goalInput.value = newGoal; 
   saveState();
   render();
 }
 
-// --- Rendering ---
+
 function render() {
   const count = state.logs.length;
   const goal = state.goal;
   const percent = Math.min(100, Math.round((count / goal) * 100));
 
-  // 1. Update Bottle
-  updateBottle(percent);
 
-  // 2. Update Stats (with animation for count)
-  // We need to store previous count to animate from?
-  // Simplified: Just animate from current DOM text value?
+  updateBottle(percent);
+  
   const currentText = dom.stats.count.textContent.split(' / ')[0];
   const currentVal = parseInt(currentText, 10) || 0;
 
@@ -220,10 +200,9 @@ function render() {
 
   dom.stats.streak.textContent = `🔥 ${state.streak} day streak`;
 
-  // 3. Update Logs UI
+
   renderLogs();
 
-  // 4. Input Sync
   dom.goalInput.value = state.goal;
 }
 
@@ -233,21 +212,18 @@ function updateBottle(percent) {
   const maxHeight = 190;
   const currentHeight = (percent / 100) * maxHeight;
 
-  // Target Y: Bottom (200) - Height
   const targetY = 200 - currentHeight;
 
   dom.bottle.fill.setAttribute('y', targetY);
   dom.bottle.fill.setAttribute('height', currentHeight);
 
-  // Move the wave group to sit on top of the water
-  // Wave moves up as water rises.
-  const waveY = targetY - 10; // offset to sit on top
+
+  const waveY = targetY - 10; 
 
   if (dom.bottle.waveGroup) {
     dom.bottle.waveGroup.style.transform = `translateY(${waveY}px)`;
   }
 
-  // Update Colors
   const color = getWaterColor(percent);
   dom.bottle.stops.forEach(stop => {
     if (stop.classList.contains('water-color-top')) {
@@ -275,26 +251,20 @@ function animateValue(obj, start, end, duration, goalTotal) {
 }
 
 function getWaterColor(percent) {
-  if (percent >= 100) return '#00fff0'; // Cyan
-  if (percent >= 67) return '#3a7bd5'; // Deep Blue
-  if (percent >= 34) return '#00d2ff'; // Mid Blue
-  return '#89f7fe'; // Light Blue (default/start)
+  if (percent >= 100) return '#00fff0';
+  if (percent >= 67) return '#3a7bd5'; 
+  if (percent >= 34) return '#00d2ff'; 
+  return '#89f7fe'; 
 }
 
 function lightenColor(color, percent) {
-  // Very simple dummy implementation for hex
-  // A real implementation would parse HEX to RGB and adjust.
-  // For now, hardcode generic variations or just return the color
-  // to strictly avoid complex dependencies.
-  // Let's just return a lighter fixed color map based on input or logic above.
-  return color; // Simplified for "pure logic" approach
+  return color;
 }
 
 function renderLogs() {
   const container = dom.logs;
   container.innerHTML = '';
-
-  // Show all, but fade older ones if > 12
+  
   const total = state.logs.length;
   const fadeThreshold = total - 12;
 
@@ -342,7 +312,6 @@ function triggerButtonAnimation(btn) {
   }, 100);
 }
 
-// --- Confetti (Simple Canvas impl) ---
 function triggerConfetti() {
   const canvas = dom.confetti;
   const ctx = canvas.getContext('2d');
@@ -373,7 +342,7 @@ function triggerConfetti() {
         active = true;
         p.x += p.dx;
         p.y += p.dy;
-        p.dy += 0.2; // gravity
+        p.dy += 0.2;
         p.life--;
 
         ctx.beginPath();
@@ -384,7 +353,7 @@ function triggerConfetti() {
     });
 
     if (active) requestAnimationFrame(animateConfetti);
-    else ctx.clearRect(0, 0, canvas.width, canvas.height); // cleanup
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
   animateConfetti();
@@ -394,22 +363,20 @@ function setupEventListeners() {
   dom.controls.add.addEventListener('click', addGlass);
   dom.controls.remove.addEventListener('click', removeGlass);
   dom.setGoalBtn.addEventListener('click', setGoal);
-  // dom.actions.undo removed
+  
   dom.actions.reset.addEventListener('click', resetDay);
 
-  // Auto-save goal on change? Prompts says "Set Goal button" 
-  // but also "Changing the goal immediately updates".
-  // Let's add 'input' listener for immediate feedback, but persist on button?
-  // Prompt says: "A Set Goal button that saves the goal... Changing the goal immediately updates the fill"
-  // So visual update on input, save on button.
+
+  
   dom.goalInput.addEventListener('input', () => {
     let val = parseInt(dom.goalInput.value, 10);
     if (!isNaN(val) && val > 0) {
-      state.goal = val; // Temp update for visual
+      state.goal = val; 
       render();
     }
   });
 }
 
-// Start
+
 document.addEventListener('DOMContentLoaded', init);
+

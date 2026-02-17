@@ -6,7 +6,6 @@
   --accent-blue: #58a6ff;
   --water-light: #7ee787;
 
-  /* Water Colors */
   --water-low: #3a7bd5;
   --water-mid: #00d2ff;
   --water-high: #00fff0;
@@ -25,7 +24,7 @@ body {
   color: var(--text-color);
   font-family: var(--font-main);
   overflow: hidden;
-  /* No scroll */
+
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -37,7 +36,7 @@ body {
   width: 50%;
   height: auto;
   max-height: 70vh;
-  /* Compact container */
+  
   background-color: var(--container-color);
   display: flex;
   flex-direction: column;
@@ -48,7 +47,6 @@ body {
   border-radius: 12px;
 }
 
-/* Header */
 header {
   text-align: center;
   margin-bottom: 1rem;
@@ -68,14 +66,13 @@ header h1 {
   color: #8b949e;
 }
 
-/* Goal Section */
 .goal-section {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.5rem;
-  /* Compact margin */
+
   flex-shrink: 0;
 }
 
@@ -86,7 +83,7 @@ header h1 {
 
 #goalInput {
   background: #010409;
-  /* Reference match */
+  
   border: 1px solid var(--border-color);
   color: #fff;
   padding: 0.5rem;
@@ -104,7 +101,7 @@ header h1 {
 
 #setGoalBtn {
   background: #0d1117;
-  /* Palette match */
+ 
   color: var(--text-color);
   border: 1px solid var(--border-color);
   padding: 0.5rem 1rem;
@@ -118,19 +115,17 @@ header h1 {
   background: #30363d;
 }
 
-/* Main Spilt */
+
 .main-split {
   display: flex;
   flex: 1;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  /* Tighter main gap */
   min-height: 0;
-  /* Allow shrinking */
 }
 
-/* Bottle */
+
 .bottle-column {
   display: flex;
   justify-content: center;
@@ -142,7 +137,7 @@ header h1 {
 .bottle-container {
   height: 100%;
   max-height: 240px;
-  /* Restored small size */
+  
   aspect-ratio: 1/2;
   position: relative;
 }
@@ -153,16 +148,14 @@ header h1 {
   overflow: visible;
 }
 
-/* Stats */
+
 .stats-column {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 1rem;
-  /* Further reduced padding */
   gap: 0.5rem;
-  /* Tighter stats */
   color: var(--text-color);
 }
 
@@ -172,7 +165,6 @@ header h1 {
 
 .large-stat {
   font-size: 2rem;
-  /* Reduced font size */
   font-weight: 700;
   display: block;
   line-height: 1;
@@ -210,11 +202,9 @@ header h1 {
 
 .stat-text.highlight {
   color: #ffd700;
-  /* Gold for streak */
   font-weight: 600;
 }
 
-/* Controls */
 .controls-section {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -244,7 +234,6 @@ header h1 {
   background: #0d1117;
   color: var(--text-color);
   width: 40px;
-  /* Smaller minus */
   height: 40px;
   border-radius: 50%;
   font-size: 1.2rem;
@@ -338,10 +327,8 @@ header h1 {
   }
 }
 
-/* Logs */
 .log-section {
   height: 50px;
-  /* More compact */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -353,7 +340,6 @@ header h1 {
   display: flex;
   gap: 0.5rem;
   overflow: hidden;
-  /* No scroll, older items fade */
   max-width: 100%;
   padding: 0 1rem;
   mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -386,7 +372,6 @@ header h1 {
   color: #8b949e;
 }
 
-/* Footer */
 .actions-footer {
   display: flex;
   justify-content: center;
@@ -407,7 +392,6 @@ header h1 {
   border-radius: 6px;
   transition: background 0.2s, transform 0.1s;
   flex: 1;
-  /* Match reference expanding buttons */
   text-align: center;
 }
 
@@ -419,7 +403,6 @@ header h1 {
   transform: scale(0.98);
 }
 
-/* Removed danger style to match Set Goal */
 .action-btn.danger {
   border-color: var(--border-color);
   color: var(--text-color);
@@ -429,7 +412,6 @@ header h1 {
   background: #30363d;
 }
 
-/* Confetti Canvas */
 #confettiCanvas {
   position: fixed;
   top: 0;
@@ -438,4 +420,5 @@ header h1 {
   height: 100%;
   pointer-events: none;
   z-index: 100;
+
 }
